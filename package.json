@@ -3,6 +3,7 @@
   "version": "1.4.6",
   "description": "Team CUP Phaser ",
   "devDependencies": {
+    "parcel-bundler": "^1.12.5",
     "prettier": "2.2.1"
   },
   "scripts": {
