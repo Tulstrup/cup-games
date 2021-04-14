@@ -5,8 +5,8 @@ interface BalloonParameters {
     x: number;
     y: number;
     texture: string | Phaser.Textures.Texture;
+    hasGift: boolean;
     frame?: string | number;
-    hasGift: boolean
 }
 
 export class Balloon extends Phaser.GameObjects.Sprite {
@@ -44,16 +44,6 @@ export class Balloon extends Phaser.GameObjects.Sprite {
             // play balloon pop sound
             // pop the balloon
         }
-    }
-
-    private pop(): void {
-        const particles = this.add.particles('redParticle');
-
-        const emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 0.5, end: 0 },
-            blendMode: 'ADD'
-        });
     }
 
     private applyPhysics(): void {
