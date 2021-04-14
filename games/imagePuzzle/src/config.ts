@@ -1,11 +1,11 @@
 import { MainScene } from './scenes/main-scene';
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
-  title: 'Template',
+  title: 'Image Puzzler',
   version: '1.0',
-  width: 800,
-  height: 600,
-  backgroundColor: 0x3a404d,
+  width: 600,
+  height: 1100,
+  backgroundColor: 0x000000,
   type: Phaser.AUTO,
   parent: 'game',
   physics: {
@@ -13,6 +13,9 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     arcade: {
       gravity: { y: 200 }
     }
+  },
+  scale: {
+    mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
   },
   scene: [MainScene]
 };
