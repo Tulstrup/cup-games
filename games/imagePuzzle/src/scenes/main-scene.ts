@@ -102,7 +102,7 @@ export class MainScene extends Phaser.Scene {
     frame.setScale(this.imageScale)
     frame.rotation = -0.05
 
-    const congratulations = this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.2, 'Hooooray!\nWell done!', { font: '10em PayType', color: '#504678' });
+    const congratulations = this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.2, 'Hooooray!\nWell done!', { font: '10em PayType-Bd', color: '#504678' });
     congratulations.rotation = -0.10;
     congratulations.setOrigin(0.5, 0.5);
 
@@ -116,11 +116,11 @@ export class MainScene extends Phaser.Scene {
     button.setScale(0.60);
     button.setOrigin(0.5, 0.5);
 
-    const text = this.add.text(this.scale.width / 2, this.scale.height / 2 * 1.7, label, { font: '7em PayType', color: '#504678' });
+    const text = this.add.text(this.scale.width / 2, this.scale.height / 2 * 1.7, label, { font: '7em PayType-Rg', color: '#504678' });
     text.setOrigin(0.5, 0.5);
   }
 
   private onCompleteClick(): void {
-    alert("Call the app Android.onComplete('cancelled/completed')")
+    Android.onGameCompleted()
   }
 }
