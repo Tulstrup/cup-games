@@ -8,7 +8,7 @@
   "scripts": {
     "template": "cd games/template && npm i && npm run dev",
     "jonas": "cd games/jonas && npm i && npm run dev",
-    "build-all": "cd games/template && npm i && npm run"
+    "build-all": "cd games/jonas && parcel build ./index.html"
   },
   "repository": {
     "type": "git",
