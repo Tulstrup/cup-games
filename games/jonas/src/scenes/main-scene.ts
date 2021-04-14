@@ -1,33 +1,63 @@
-import { Redhat } from '../objects/redhat';
+import { Tile } from '../objects/tile';
+import { PuzzleModel } from '../puzzle.model';
 
 export class MainScene extends Phaser.Scene {
-  private myRedhat: Redhat;
+  private puzzle: PuzzleModel;
+  private rows: number = 3;
+  private cols: number = 3;
+  private tileSize: number = 166;
+
+  private tiles: Tile[];
 
   constructor() {
     super({ key: 'MainScene' });
   }
 
   preload(): void {
-    this.load.image('redhat', 'images/redhat.png');
-    this.load.image('redParticle', 'images/red.png');
+    this.load.spritesheet('puzzleImage', 'images/sun.png', { frameWidth: this.tileSize, frameHeight: this.tileSize});
   }
 
   create(): void {
-    const particles = this.add.particles('redParticle');
+    this.puzzle = new PuzzleModel(this.rows, this.cols);
 
-    const emitter = particles.createEmitter({
-      speed: 100,
-      scale: { start: 0.5, end: 0 },
-      blendMode: 'ADD'
-    });
+    this.tiles = [];
+    for(let i = 0; i < this.puzzle.tiles.length - 1; i++) {
+      const tile = new Tile({
+        scene: this,
+        x: 0,
+        y: 0,
+        texture: 'puzzleImage',
+        frame: i
+      });
 
-    this.myRedhat = new Redhat({
-      scene: this,
-      x: 400,
-      y: 300,
-      texture: 'redhat'
-    });
+      this.tiles.push(tile);
+      tile.setInteractive();
+    }
 
-    emitter.startFollow(this.myRedhat);
+    this.puzzle.shuffleTiles();
+
+    this.updateTiles();
+  }
+
+  updateTiles() {
+    for(let row = 0; row < this.rows; row++) {
+      for(let col = 0; col < this.cols; col++) {
+        const tileIndex = this.puzzle.tileAt(row, col);
+
+        if (tileIndex === -1)
+          continue;
+
+        const tile = this.tiles[tileIndex];
+
+        tile.setX(50 + col * this.tileSize);
+        tile.setY(50 + row * this.tileSize);
+
+        tile.removeAllListeners();
+        tile.on('pointerdown', () => {
+          this.puzzle.interact(row, col);
+          this.updateTiles();
+        });
+      }
+    }
   }
 }
