@@ -1,0 +1,15 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Game", function () {
+  return Game;
+});
+require('phaser');
+var _config = require('./config');
+class Game extends Phaser.Game {
+  constructor(config) {
+    super(config);
+  }
+}
+window.addEventListener('load', () => {
+  const game = new Game(_config.GameConfig);
+});
