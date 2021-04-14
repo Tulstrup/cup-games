@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="digitsensitive" />
-    <title>Template</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./styles/css/style.css"
-      media="screen"
-    />
-    <script src="./src/game.ts"></script>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./styles/css/style.css" />
+    <script>
+function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 34.397, lng: 150.644 },
+            scrollwheel: true,
+            zoom: 2
+        });
+    } // close function here
+    </script>
+    <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDieZ7uAY4DPdT3Z4fp4KtykHl6dWryYdw&callback=initMap">
+        </script>
   </head>
   <body>
-    <h1>Template</h1>
-    <div id="game"></div>
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+
   </body>
 </html>
