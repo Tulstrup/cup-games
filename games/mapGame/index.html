@@ -1,19 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="digitsensitive" />
-    <title>Template</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./styles/css/style.css"
-      media="screen"
-    />
-    <script src="./src/game.ts"></script>
+    <script src="https://assets.what3words.com/sdk/v3.1/what3words.js?key=IJNKQ00A"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB32sMc2hHpHVofgVP8Qjhkv7K5z1z3BQA"></script>
+
+    <script>
+      function onLocationReady(lat, long) {
+        console.log('Latitude: ' + lat + 'Longitude: ' + long);        
+      }
+
+      function getLocation() {
+        console.log('calling Android.requestLocation()');
+        Android.requestLocation();
+        console.log('called Android.requestLocation()');
+      }
+    </script>
+    <style>
+      #map {
+        height: 80%;
+      }
+
+      #btn {
+        height: 20%;
+        width: 100%;        
+        font-size: 4em;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
+
   <body>
-    <h1>Template</h1>
-    <div id="game"></div>
+    <div id="map"></div>
+    <button id="btn" onclick="getLocation()">PRØV AT ÅBNE GAVEN</button>
+    <script>
+      // Create the Google Map
+      let map = new google.maps.Map(document.getElementById("map"), {
+        center: { "lng": 10.088403,"lat": 56.044847},
+        zoom: 19,
+        mapTypeId: 'satellite'
+      });
+    </script>
+    <script>
+      var gridData;
+      
+      // Add the what3words grid to the Google Map data layer once the desired zoom level is meet
+      map.addListener('bounds_changed', function() {
+        const zoom = map.getZoom();
+        const loadFeatures = zoom > 17;
+
+        if (loadFeatures) { // Zoom level is high enough
+          var ne = map.getBounds().getNorthEast();
+          var sw = map.getBounds().getSouthWest();
+
+          // Call the what3words Grid API to obtain the grid squares within the current visble bounding box
+          what3words.api
+            .gridSectionGeoJson({
+              southwest: {
+                lat: sw.lat(), lng: sw.lng()
+              },
+              northeast: {
+                lat: ne.lat(), lng: ne.lng()
+              }
+            }).then(function(data) {
+              if (gridData !== undefined) {
+                for (var i = 0; i < gridData.length; i++) {
+                    map.data.remove(gridData[i]);
+                }
+              }
+              gridData = map.data.addGeoJson(data);
+            }).catch(console.error);
+        }
+
+        // Set the grid display style
+        map.data.setStyle({
+          visible: loadFeatures,
+          strokeColor: '#000000',
+          strokeWeight: 0.5,
+        });
+      });
+    </script>
   </body>
 </html>
