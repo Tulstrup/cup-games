@@ -1,5 +1,6 @@
 import { Dart } from './dart';
 import { Gameworld } from '../interfaces/gameworld.interface';
+import { CONST } from '../const/const';
 
 interface SlingshotParameters {
 	scene: Phaser.Scene;
@@ -23,7 +24,7 @@ export class Slingshot extends Phaser.GameObjects.Image {
 
 		this.scene.add.existing(this);
 
-		this.setScale(0.2, 0.2);
+		this.setScale(CONST.SLINGSHOT.SCALE, CONST.SLINGSHOT.SCALE);
 
 		this.setInteractive({ draggable: true })
 			.on('drag', this.drag)

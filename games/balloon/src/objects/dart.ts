@@ -1,4 +1,4 @@
-import { DART_SETTINGS } from '../const/const';
+import { DART_SETTINGS, CONST } from '../const/const';
 export interface DartParameters {
 	scene: Phaser.Scene;
 	position: Phaser.Math.Vector2;
@@ -23,8 +23,7 @@ export class Dart extends Phaser.Physics.Arcade.Sprite {
 			'dart'
 		);
 
-		this.displayWidth = 140;
-		this.displayHeight = 140;
+		this.setScale(CONST.DART.SCALE, CONST.DART.SCALE);
 		this._currentSpeed = DART_SETTINGS.maxSpeed;
 
 		this.setAngle(

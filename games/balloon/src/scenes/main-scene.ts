@@ -10,6 +10,8 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 	dartGroup: Phaser.GameObjects.Group;
 	balloonGroup: Phaser.GameObjects.Group;
 
+	isGameover: boolean;
+
 	constructor() {
 		super({ key: 'MainScene' });
 	}
@@ -25,8 +27,8 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 			scene: this,
 			gameworld: this,
 			position: new Phaser.Math.Vector2(
-				this.scale.width * CONST.SLINGSHOT_POSITION_PERCENTAGE.x,
-				this.scale.height * CONST.SLINGSHOT_POSITION_PERCENTAGE.y
+				this.scale.width * CONST.SLINGSHOT.POSITION_PERCENTAGE.x,
+				this.scale.height * CONST.SLINGSHOT.POSITION_PERCENTAGE.y
 			)
 		});
 
@@ -48,10 +50,19 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 			this.dartGroup,
 			this.balloonGroup,
 			(dart, balloon) => {
-				this.dartGroup.remove(dart, true, true);
+				// this.dartGroup.remove(dart, true, true);
 				this.balloonGroup.remove(balloon, true, true);
 			}
 		);
+
+		if (this.balloonGroup.children.entries.length === 0) {
+			this.endGame();
+		}
+	}
+
+	endGame() {
+		if (this.isGameover) return;
+		this.isGameover = true;
 	}
 
 	spawnDart(position: Phaser.Math.Vector2, direction: Phaser.Math.Vector2) {
@@ -65,20 +76,24 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 	}
 
 	spawnBalloons(): void {
+		let createInLeftSide = false;
+
 		for (let i = 0; i < CONST.BALLOON.TOTAL; i++) {
 			const balloon = new Balloon({
 				scene: this,
-				x: this.getRandomSpawnPostion(
-					1,
-					CONST.BALLOON.TOTAL * CONST.BALLOON.SIZE
-				),
+				x: createInLeftSide ? 0 : this.scale.width,
 				y: this.getRandomSpawnPostion(
 					CONST.BALLOON.MIN_Y_POSITION,
 					CONST.BALLOON.MAX_Y_POSITION
 				),
 				texture: 'balloon',
-				hasGift: false
+				hasGift: false,
+				direction: createInLeftSide
+					? Phaser.Math.Vector2.RIGHT
+					: Phaser.Math.Vector2.LEFT
 			});
+
+			createInLeftSide = !createInLeftSide;
 
 			this.balloonGroup.add(balloon);
 		}
