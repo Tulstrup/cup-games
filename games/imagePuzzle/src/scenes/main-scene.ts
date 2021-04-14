@@ -3,6 +3,8 @@ import { PuzzleModel } from "../puzzle.model";
 import Sprite = Phaser.GameObjects.Sprite;
 import INT = Phaser.Renderer.WebGL.INT;
 import EventEmitter = Phaser.Events.EventEmitter;
+import Text = Phaser.GameObjects.Text;
+import Image = Phaser.GameObjects.Image;
 
 export class MainScene extends Phaser.Scene {
   private puzzle: PuzzleModel;
@@ -11,6 +13,8 @@ export class MainScene extends Phaser.Scene {
   private imageSize = 500;
   private tileSize: number = this.imageSize / this.rows;
   private imageScale: number;
+  private header: Text;
+  private frame: Image
 
   private tiles: Tile[];
 
@@ -53,10 +57,18 @@ export class MainScene extends Phaser.Scene {
       tile.setInteractive();
     }
 
+    this.header = this.add.text(this.scale.width / 2 * 1.1, this.scale.height / 7, "Move the tiles!", { font: '10em PayType-Bd', color: '#504678' });
+    this.header.setOrigin(0.55, 0.65);
+    this.header.rotation = -0.1
+
     this.puzzle.shuffleTiles();
 
     this.updateTiles();
     this.sound.play('background_music', { loop: true });
+
+    this.frame = this.add.image(this.scale.width / 2, this.scale.height / 2, 'frame');
+    this.frame.setScale(this.imageScale)
+
   }
 
   updateTiles() {
@@ -99,15 +111,13 @@ export class MainScene extends Phaser.Scene {
     const gameImage = this.add.image(this.scale.width / 2, this.scale.height / 2, 'gameImage');
     gameImage.setScale(this.imageScale)
     gameImage.rotation = -0.05;
+    gameImage.setDepth(5); 
 
-    const frame = this.add.image(this.scale.width / 2, this.scale.height / 2, 'frame');
-    frame.setScale(this.imageScale)
-    frame.rotation = -0.05
+    this.frame.setScale(this.imageScale)
+    this.frame.rotation = -0.05
+    this.frame.setDepth(10);
 
-    const congratulations = this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.2, 'Hooooray!\nWell done!', { font: '10em PayType-Bd', color: '#504678' });
-    congratulations.rotation = -0.10;
-    congratulations.setOrigin(0.5, 0.5);
-
+    this.header.text = 'Hooooray!\nWell done!';
     this.createButton("Done", this.onCompleteClick);
   }
 
@@ -119,7 +129,7 @@ export class MainScene extends Phaser.Scene {
     button.setOrigin(0.5, 0.5);
 
     const text = this.add.text(this.scale.width / 2, this.scale.height / 2 * 1.7, label, { font: '7em PayType-Rg', color: '#504678' });
-    text.setOrigin(0.5, 0.5);
+    text.setOrigin(0.55, 0.65);
   } 
 
   private onCompleteClick(): void {
