@@ -1,0 +1,25 @@
+{
+  "name": "phaser3-typescript",
+  "version": "1.4.6",
+  "description": "Team CUP Phaser ",
+  "devDependencies": {
+    "prettier": "2.2.1"
+  },
+  "scripts": {
+    "template": "cd games/template && npm i && npm run dev",
+    "jonas": "cd games/jonas && npm i && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitsensitive/phaser3-typescript.git"
+  },
+  "author": {
+    "name": "digitsensitive",
+    "email": "digit.sensitivee@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/digitsensitive/phaser3-typescript/issues"
+  },
+  "homepage": "https://github.com/digitsensitive/phaser3-typescript#readme"
+}
