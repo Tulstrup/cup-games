@@ -46,15 +46,17 @@ export class PuzzleModel {
     return true;
   }
 
-  interact(row: number, col: number): void {
+  interact(row: number, col: number): boolean {
     if (!this.isInteractionAllowed(row, col))
-      return;
+      return false;
 
     const emptyTileIndex = this.tiles.findIndex(x => x == -1);
     const interactedTileIndex = this.pointToTileIndex(row, col);
 
     this.tiles[emptyTileIndex] = this.tiles[interactedTileIndex];
     this.tiles[interactedTileIndex] = -1;
+
+    return true;
   }
 
   print(): void {
