@@ -1,13 +1,17 @@
+import { DART_SETTINGS } from '../const/const';
 export interface DartParameters {
 	scene: Phaser.Scene;
 	position: Phaser.Math.Vector2;
 	direction: Phaser.Math.Vector2;
+}
+
+export interface DartSettings {
 	minSpeed: number;
 	maxSpeed: number;
 	deAccleration: number;
 }
 
-export class Dart extends Phaser.GameObjects.Sprite {
+export class Dart extends Phaser.Physics.Arcade.Sprite {
 	private _currentSpeed: number;
 	parameters: DartParameters;
 
@@ -21,7 +25,7 @@ export class Dart extends Phaser.GameObjects.Sprite {
 
 		this.displayWidth = 140;
 		this.displayHeight = 140;
-		this._currentSpeed = parameters.maxSpeed;
+		this._currentSpeed = DART_SETTINGS.maxSpeed;
 
 		this.setAngle(
 			parameters.direction.angle() * Phaser.Math.RAD_TO_DEG + 220
@@ -33,23 +37,24 @@ export class Dart extends Phaser.GameObjects.Sprite {
 			this.parameters.position.x,
 			this.parameters.position.y
 		);
+
+		this.scene.add.existing(this);
+		this.scene.physics.add.existing(this);
 	}
 
-	update(deltaTime: number) {
-		this._currentSpeed *= this.parameters.deAccleration;
+	update(elapsed: number, deltaTime: number) {
+		this._currentSpeed *= DART_SETTINGS.deAccleration;
 		this._currentSpeed = Phaser.Math.Clamp(
 			this._currentSpeed,
-			this.parameters.minSpeed,
-			this.parameters.maxSpeed
+			DART_SETTINGS.minSpeed,
+			DART_SETTINGS.maxSpeed
 		);
 
 		const direction = this.parameters.direction;
 
-		const newPositionX =
-			this.x + direction.x * this._currentSpeed * deltaTime;
-		const newPositionY =
-			this.y + direction.y * this._currentSpeed * deltaTime;
-
-		this.setPosition(newPositionX, newPositionY);
+		this.setVelocity(
+			direction.x * this._currentSpeed * deltaTime,
+			direction.y * this._currentSpeed * deltaTime
+		);
 	}
 }

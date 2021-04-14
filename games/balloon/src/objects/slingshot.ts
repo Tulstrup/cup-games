@@ -1,21 +1,29 @@
 import { Dart } from './dart';
+import { Gameworld } from '../interfaces/gameworld.interface';
 
 interface SlingshotParameters {
 	scene: Phaser.Scene;
+	gameworld: Gameworld;
 	position: Phaser.Math.Vector2;
 	frame?: string | number;
 }
 
 export class Slingshot extends Phaser.GameObjects.Image {
-	private projectiles: Dart[] = [];
+	private _gameworld: Gameworld;
+	private _params: SlingshotParameters;
+	private _projectiles: Dart[] = [];
 	private _spawnPoint: Phaser.Math.Vector2;
 
 	constructor(params: SlingshotParameters) {
-		super(params.scene, params.position.x, params.position.y, 'slingshot');
+		super(params.scene, params.position.x, params.position.y, 'hand');
 
+		this._gameworld = params.gameworld;
+		this._params = params;
 		this._spawnPoint = params.position;
 
 		this.scene.add.existing(this);
+
+		this.setScale(0.2, 0.2);
 
 		this.setInteractive({ draggable: true })
 			.on('drag', this.drag)
@@ -24,29 +32,19 @@ export class Slingshot extends Phaser.GameObjects.Image {
 
 	drag(pointer: PointerEvent, dragX: number, dragY: number) {
 		this.setPosition(dragX, dragY);
+
+		const endPosition = new Phaser.Math.Vector2(dragX, dragY);
+		let dir = this._spawnPoint.clone().subtract(endPosition).normalize();
+		this.setAngle(dir.angle() * Phaser.Math.RAD_TO_DEG + 90);
 	}
 
 	dragEnd(pointer: PointerEvent, dragX: number, dragY: number) {
 		const endPosition = new Phaser.Math.Vector2(this.x, this.y);
 		this.setPosition(this._spawnPoint.x, this._spawnPoint.y);
 
-		const dart = new Dart({
-			scene: this.scene,
-			position: endPosition,
-			direction: this._spawnPoint
-				.clone()
-				.subtract(endPosition)
-				.normalize(),
-			minSpeed: 1,
-			maxSpeed: 2.5,
-			deAccleration: 0.95
-		});
-
-		this.projectiles.push(dart);
-		this.scene.add.existing(dart);
-	}
-
-	update(deltaTime: number) {
-		this.projectiles.forEach((projectile) => projectile.update(deltaTime));
+		this._gameworld.spawnDart(
+			endPosition,
+			this._spawnPoint.clone().subtract(endPosition).normalize()
+		);
 	}
 }
