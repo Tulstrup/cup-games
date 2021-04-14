@@ -118,9 +118,9 @@ export class MainScene extends Phaser.Scene {
 
     const text = this.add.text(this.scale.width / 2, this.scale.height / 2 * 1.7, label, { font: '7em PayType-Rg', color: '#504678' });
     text.setOrigin(0.5, 0.5);
-  }
+  } 
 
   private onCompleteClick(): void {
-    Android.onGameCompleted()
+    Android.onGameCompleted();
   }
 }
