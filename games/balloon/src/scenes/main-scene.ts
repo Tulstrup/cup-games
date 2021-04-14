@@ -1,21 +1,36 @@
 import { CONST } from '../const/const';
 import { Balloon } from '../objects/balloon';
+import { Slingshot } from '../objects/slingshot';
 
 export class MainScene extends Phaser.Scene {
 
   private balloons: Balloon[];
+	private slingshot: Slingshot;
 
-  constructor() {
-    super({ key: 'MainScene' });
-  }
+	constructor() {
+		super({ key: 'MainScene' });
+	}
 
   preload(): void {
+    this.load.image('dart', 'images/dart.png');
     this.load.image('redhat', 'images/redhat.png');
   }
 
-  create(): void {
+	create(): void {
+		this.slingshot = new Slingshot({
+			scene: this,
+			position: new Phaser.Math.Vector2(
+				this.scale.width / 2,
+				this.scale.height * 0.9
+			)
+		});
+
     this.spawnBalloons();
-  }
+	}
+
+	update(total: number, deltaTime: number): void {
+		this.slingshot.update(deltaTime);
+	}
 
   spawnBalloons(): void {
     this.balloons = [];
