@@ -10,7 +10,7 @@ export class MainScene extends Phaser.Scene {
   private cols: number = 3;
   private imageSize = 500;
   private tileSize: number = this.imageSize / this.rows;
-  private imageScale = 1;
+  private imageScale: number;
 
   private tiles: Tile[];
 
@@ -93,18 +93,22 @@ export class MainScene extends Phaser.Scene {
     frame.setScale(this.imageScale)
     frame.rotation = -0.05
 
-    const congratulations = this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.1, 'Hooooray! Well done!', { font: '40px PayType', color: '#504678' });
+    const congratulations = this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.2, 'Hooooray!\nWell done!', { font: '10em PayType', color: '#504678' });
     congratulations.rotation = -0.10;
+    congratulations.setOrigin(0.5, 0.5);
 
     this.createButton("Done", this.onCompleteClick);
   }
 
   private createButton(label: string, action: Function): void {
-    const button = this.add.image(this.scale.width / 2, this.scale.height / 2 * 0.9, 'button');
+    const button = this.add.image(this.scale.width / 2, this.scale.height / 2 * 1.7, 'button');
     button.setInteractive();
     button.on('pointerdown', this.onCompleteClick);
-    button.setScale(0.40)
-    this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.9, label, { font: '40px PayType', color: '#504678' });
+    button.setScale(0.60);
+    button.setOrigin(0.5, 0.5);
+
+    const text = this.add.text(this.scale.width / 2, this.scale.height / 2 * 1.7, label, { font: '7em PayType', color: '#504678' });
+    text.setOrigin(0.5, 0.5);
   }
 
   private onCompleteClick(): void {
