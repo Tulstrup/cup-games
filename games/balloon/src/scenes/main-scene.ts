@@ -16,7 +16,7 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 
 	preload(): void {
 		this.load.image('dart', 'images/dart.png');
-		this.load.image('redhat', 'images/redhat.png');
+		this.load.image('balloon', 'images/balloon.png');
 	}
 
 	create(): void {
@@ -64,21 +64,17 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 	}
 
 	spawnBalloons(): void {
-		const maximumXPosition =
-			this.sys.canvas.width - CONST.BALLOON_MIN_X_POSITION * 2;
-
-		for (let i = 0; i < CONST.BALLOON_COUNT; i++) {
+		for (let i = 0; i < CONST.BALLOON.TOTAL; i++) {
 			const balloon = new Balloon({
 				scene: this,
-				x: this.getRandomSpawnPostion(
-					CONST.BALLOON_MIN_X_POSITION,
-					maximumXPosition
-				),
+				x:
+					this.getRandomSpawnPostion(1, CONST.BALLOON.TOTAL) *
+					CONST.BALLOON.SIZE,
 				y: this.getRandomSpawnPostion(
-					CONST.BALLOON_MIN_Y_POSITION,
-					CONST.BALLOON_MAX_Y_POSITION
+					CONST.BALLOON.MIN_Y_POSITION,
+					CONST.BALLOON.MAX_Y_POSITION
 				),
-				texture: 'redhat'
+				texture: 'balloon'
 			});
 
 			this.balloonGroup.add(balloon);

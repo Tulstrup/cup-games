@@ -13,7 +13,7 @@
     "build-all": "npm run build-mapgame && npm run build-balloon && npm run build-imagepuzzle",
     "build-mapgame": "cd games/mapGame && npm i && parcel build ./index.html -d ../../dist/mapgame --public-url /mapgame/ && cd ../..",
     "build-balloon": "cd games/balloon && npm i && parcel build ./index.html -d ../../dist/balloon --public-url /balloon/ && cd ../..",
-    "build-imagepuzzle": "cd games/ImagePuzzle && npm i && parcel build ./index.html -d ../../dist/imagepuzzle --public-url /imagepuzzle/ && cd ../.."
+    "build-imagepuzzle": "cd games/imagePuzzle && npm i && parcel build ./index.html -d ../../dist/imagepuzzle --public-url /imagepuzzle/ && cd ../.."
   },
   "repository": {
     "type": "git",

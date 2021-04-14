@@ -4,14 +4,51 @@
     <script src="https://assets.what3words.com/sdk/v3.1/what3words.js?key=IJNKQ00A"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB32sMc2hHpHVofgVP8Qjhkv7K5z1z3BQA"></script>
 
-    <script>function onLocationReady(lat, long) {
-  console.log('Latitude: ' + lat + 'Longitude: ' + long);
+    <script>function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Square = function Square() {
+  _classCallCheck(this, Square);
+
+  _defineProperty(this, "southwest", {
+    lng: decimal,
+    lat: decimal
+  });
+
+  _defineProperty(this, "northeast", {
+    lng: decimal,
+    lat: decimal
+  });
+};
+
+;
+targetSquare = {
+  southwest: {
+    lng: 10.088403,
+    lat: 56.044847
+  },
+  northeast: {
+    lng: 10.088451,
+    lat: 56.044874
+  }
+};
+
+function onLocationReady(lat, long) {
+  Android.log('Latitude: ' + lat + 'Longitude: ' + long);
+
+  if (lat < targetSquare.northeast.lat && lat > targetSquare.southwest.lat && long < targetSquare.northeast.lng && long > targetSquare.southwest.lng) {
+    alert("Inside the square");
+  } else {
+    alert("outside");
+  }
 }
 
 function getLocation() {
-  console.log('calling Android.requestLocation()');
+  Android.log('calling Android.requestLocation()');
   Android.requestLocation();
-  console.log('called Android.requestLocation()');
+  Android.log('called Android.requestLocation()');
+  onLocationReady(56.044861, 10.088421);
 }</script>
     <style>#map {
         height: 80%;
