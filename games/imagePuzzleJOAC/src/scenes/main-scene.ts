@@ -6,8 +6,9 @@ export class MainScene extends Phaser.Scene {
   constructor() {
     super({ key: 'MainScene' });
   }
-    
+
   preload(): void {
+    this.load.script("webfont", "//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js");
     this.load.image('background', 'images/beach.png');
     this.load.image('button', 'images/button.png');
     this.load.image('frame', 'images/frame.png');
@@ -27,7 +28,7 @@ export class MainScene extends Phaser.Scene {
     frame.setScale(0.80)
     frame.rotation = -0.05
 
-    const congratulations = this.add.text(20, 60, 'Hooooray! Well done!', { font: '40px PayType', color: '#504678' });
+    const congratulations = this.add.text(20, 60, 'Hooooray! Well done!', { font: '40px PayType-Bd', color: '#504678' });
     
     congratulations.rotation = -0.10;
     
@@ -39,7 +40,7 @@ export class MainScene extends Phaser.Scene {
     button.setInteractive();
     button.on('pointerdown', this.onCompleteClick);    
     button.setScale(0.40)
-    this.add.text(160, 570, label, { font: '40px PayType', color: '#504678' });
+    this.add.text(160, 570, label, { font: '40px PayType-Rg', color: '#504678' });
   }
 
   onCompleteClick(): void {
