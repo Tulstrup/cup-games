@@ -1,17 +1,28 @@
 import { Redhat } from '../objects/redhat';
+import { Slingshot } from '../objects/slingshot';
 
 export class MainScene extends Phaser.Scene {
-  private myRedhat: Redhat;
+	private slingshot: Slingshot;
 
-  constructor() {
-    super({ key: 'MainScene' });
-  }
+	constructor() {
+		super({ key: 'MainScene' });
+	}
 
-  preload(): void {
-    this.load.image('redhat', 'images/redhat.png');
-    this.load.image('redParticle', 'images/red.png');
-  }
+	preload(): void {
+		this.load.image('dart', 'images/dart.png');
+	}
 
-  create(): void {
-  }
+	create(): void {
+		this.slingshot = new Slingshot({
+			scene: this,
+			position: new Phaser.Math.Vector2(
+				this.scale.width / 2,
+				this.scale.height * 0.9
+			)
+		});
+	}
+
+	update(total: number, deltaTime: number): void {
+		this.slingshot.update(deltaTime);
+	}
 }
