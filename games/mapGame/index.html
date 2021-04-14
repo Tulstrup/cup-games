@@ -1,26 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link rel="stylesheet" type="text/css" href="./styles/css/style.css" />
-    <script>
-function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 34.397, lng: 150.644 },
-            scrollwheel: true,
-            zoom: 2
-        });
-    } // close function here
-    </script>
-    <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDieZ7uAY4DPdT3Z4fp4KtykHl6dWryYdw&callback=initMap">
-        </script>
+    <script src="https://assets.what3words.com/sdk/v3.1/what3words.js?key=IJNKQ00A"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB32sMc2hHpHVofgVP8Qjhkv7K5z1z3BQA"></script>
+
+    <style>
+      #map {
+        height: 100%;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
+
   <body>
     <div id="map"></div>
+    <script>
+      // Create the Google Map
+      let map = new google.maps.Map(document.getElementById("map"), {
+        center: { "lng": 10.088403,"lat": 56.044847},
+        zoom: 19,
+        mapTypeId: 'satellite'
+      });
+    </script>
+    <script>
+      var gridData;
+      
+      // Add the what3words grid to the Google Map data layer once the desired zoom level is meet
+      map.addListener('bounds_changed', function() {
+        const zoom = map.getZoom();
+        const loadFeatures = zoom > 17;
 
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+        if (loadFeatures) { // Zoom level is high enough
+          var ne = map.getBounds().getNorthEast();
+          var sw = map.getBounds().getSouthWest();
 
+          // Call the what3words Grid API to obtain the grid squares within the current visble bounding box
+          what3words.api
+            .gridSectionGeoJson({
+              southwest: {
+                lat: sw.lat(), lng: sw.lng()
+              },
+              northeast: {
+                lat: ne.lat(), lng: ne.lng()
+              }
+            }).then(function(data) {
+              if (gridData !== undefined) {
+                for (var i = 0; i < gridData.length; i++) {
+                    map.data.remove(gridData[i]);
+                }
+              }
+              gridData = map.data.addGeoJson(data);
+            }).catch(console.error);
+        }
+
+        // Set the grid display style
+        map.data.setStyle({
+          visible: loadFeatures,
+          strokeColor: '#FF9300',
+          strokeWeight: 1,
+        });
+      });
+    </script>
   </body>
 </html>
