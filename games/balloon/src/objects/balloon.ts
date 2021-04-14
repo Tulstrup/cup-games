@@ -6,12 +6,14 @@ interface BalloonParameters {
     y: number;
     texture: string | Phaser.Textures.Texture;
     frame?: string | number;
+    hasGift: boolean
 }
 
 export class Balloon extends Phaser.GameObjects.Sprite {
 
     private velocity: Phaser.Math.Vector2;
     private radius: number;
+    private hasGift: boolean;
 
     body: Phaser.Physics.Arcade.Body;
 
@@ -21,6 +23,7 @@ export class Balloon extends Phaser.GameObjects.Sprite {
         this.displayWidth = CONST.BALLOON.SIZE;
         this.displayHeight = CONST.BALLOON.SIZE;
         this.radius = 0;
+        this.hasGift = params.hasGift;
 
         this.applyPhysics();
 
@@ -30,6 +33,27 @@ export class Balloon extends Phaser.GameObjects.Sprite {
     update(): void {
         this.applyVelocity();
         this.checkIfOffScreen();
+    }
+
+    popBalloon(): void {
+        if (this.hasGift) {
+            // play reward sound
+            // pop (remove) the balloon 
+            // play reward animation
+        } else {
+            // play balloon pop sound
+            // pop the balloon
+        }
+    }
+
+    private pop(): void {
+        const particles = this.add.particles('redParticle');
+
+        const emitter = particles.createEmitter({
+            speed: 100,
+            scale: { start: 0.5, end: 0 },
+            blendMode: 'ADD'
+        });
     }
 
     private applyPhysics(): void {
@@ -50,18 +74,21 @@ export class Balloon extends Phaser.GameObjects.Sprite {
     }
 
     private checkIfOffScreen(): void {
+        const maxX = this.scene.sys.canvas.width - CONST.BALLOON.SIZE * 2
+        const maxY = this.scene.sys.canvas.height / 2
+
         // horizontal check
-        if (this.x > this.scene.sys.canvas.width + CONST.BALLOON.SIZE) {
+        if (this.x > maxX + CONST.BALLOON.SIZE) {
             this.x = -CONST.BALLOON.SIZE;
         } else if (this.x < -CONST.BALLOON.SIZE) {
-            this.x = this.scene.sys.canvas.width + CONST.BALLOON.SIZE;
+            this.x = maxX + CONST.BALLOON.SIZE;
         }
 
         // vertical check
-        if (this.y > this.scene.sys.canvas.height + CONST.BALLOON.SIZE) {
+        if (this.y > maxY + CONST.BALLOON.SIZE) {
             this.y = -CONST.BALLOON.SIZE;
         } else if (this.y < -CONST.BALLOON.SIZE) {
-            this.y = this.scene.sys.canvas.height + CONST.BALLOON.SIZE;
+            this.y = maxY + CONST.BALLOON.SIZE;
         }
     }
 

@@ -36,7 +36,7 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  spawnBalloons(): void {
+  private spawnBalloons(): void {
     this.balloons = [];
     
     for (let i = 0; i < CONST.BALLOON.TOTAL; i++) {
