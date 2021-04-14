@@ -30,7 +30,7 @@ export class MainScene extends Phaser.Scene {
     this.load.spritesheet('puzzleImage', 'images/sun.png', { frameWidth: this.tileSize, frameHeight: this.tileSize});
     this.load.audio('tile_move', 'audio/tile_move.wav');
     this.load.audio('win', 'audio/win.wav');
-    this.load.audio('background_music', 'audio/background_music.wav');
+    this.load.audio('background_music', 'audio/background_music.mp3');
   }
 
   create(): void {
