@@ -13,7 +13,7 @@ export class MainScene extends Phaser.Scene {
 
   preload(): void {
     this.load.image('dart', 'images/dart.png');
-    this.load.image('redhat', 'images/redhat.png');
+    this.load.image('balloon', 'images/balloon.png');
   }
 
 	create(): void {
@@ -30,28 +30,38 @@ export class MainScene extends Phaser.Scene {
 
 	update(total: number, deltaTime: number): void {
 		this.slingshot.update(deltaTime);
+
+    for (let i = 0; i < CONST.BALLOON.TOTAL; i++) {
+      this.balloons[i].update();
+    }
 	}
 
   spawnBalloons(): void {
     this.balloons = [];
     
-    const maximumXPosition = this.sys.canvas.width - CONST.BALLOON_MIN_X_POSITION * 2
+    const maximumXPosition = this.sys.canvas.width - CONST.BALLOON.MIN_X_POSITION * 2
 
-    for (let i = 0; i < CONST.BALLOON_COUNT; i++) {
+    for (let i = 0; i < CONST.BALLOON.TOTAL; i++) {
       this.balloons.push(
         new Balloon({
           scene: this,
-          x: this.getRandomSpawnPostion(CONST.BALLOON_MIN_X_POSITION, maximumXPosition),
-          y: this.getRandomSpawnPostion(CONST.BALLOON_MIN_Y_POSITION, CONST.BALLOON_MAX_Y_POSITION),
-          texture: 'redhat'
+          x: this.getRandomSpawnPostion(1, CONST.BALLOON.TOTAL) * 140,
+          y: this.getRandomSpawnPostion(CONST.BALLOON.MIN_Y_POSITION, CONST.BALLOON.MAX_Y_POSITION),
+          texture: 'balloon'
         })
       );
-
-      this.add.existing(this.balloons[i]);
     }
   }
 
+  // balloons shouldn't overlap
   private getRandomSpawnPostion(min: number, max: number): number {
     return Phaser.Math.RND.between(min, max);
+    //return Phaser.Math.RND.between(1, CONST.BALLOON_COUNT) * 140;
+    //x, y + 140 x 140
   }
+
+  // private getRandomPosition(): Phaser.Math.Vector2 {
+  //   const position = Phaser.Math.RND.between(1, CONST.BALLOON_COUNT);
+  //   position+140
+  // }
 }
