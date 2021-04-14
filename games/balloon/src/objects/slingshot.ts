@@ -15,13 +15,15 @@ export class Slingshot extends Phaser.GameObjects.Image {
 	private _spawnPoint: Phaser.Math.Vector2;
 
 	constructor(params: SlingshotParameters) {
-		super(params.scene, params.position.x, params.position.y, 'slingshot');
+		super(params.scene, params.position.x, params.position.y, 'hand');
 
 		this._gameworld = params.gameworld;
 		this._params = params;
 		this._spawnPoint = params.position;
 
 		this.scene.add.existing(this);
+
+		this.setScale(0.2, 0.2);
 
 		this.setInteractive({ draggable: true })
 			.on('drag', this.drag)
@@ -30,6 +32,10 @@ export class Slingshot extends Phaser.GameObjects.Image {
 
 	drag(pointer: PointerEvent, dragX: number, dragY: number) {
 		this.setPosition(dragX, dragY);
+
+		const endPosition = new Phaser.Math.Vector2(dragX, dragY);
+		let dir = this._spawnPoint.clone().subtract(endPosition).normalize();
+		this.setAngle(dir.angle() * Phaser.Math.RAD_TO_DEG + 90);
 	}
 
 	dragEnd(pointer: PointerEvent, dragX: number, dragY: number) {
