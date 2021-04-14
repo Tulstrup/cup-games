@@ -5,14 +5,45 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB32sMc2hHpHVofgVP8Qjhkv7K5z1z3BQA"></script>
 
     <script>
-      function onLocationReady(lat, long) {
-        console.log('Latitude: ' + lat + 'Longitude: ' + long);        
+      class Square {
+          southwest= {
+            lng: decimal,
+            lat: decimal
+          };
+          northeast= {
+            lng: decimal,
+            lat: decimal
+          };
+        };
+
+      targetSquare = {
+          southwest: {
+            lng: 10.088403,
+            lat: 56.044847
+          },
+          northeast: {
+            lng: 10.088451,
+            lat: 56.044874
+          }
+        };
+
+      function onLocationReady(lat, long){
+        Android.log('Latitude: ' + lat + 'Longitude: ' + long);
+
+        if(lat < targetSquare.northeast.lat 
+          && lat > targetSquare.southwest.lat
+          && long < targetSquare.northeast.lng
+          && long > targetSquare.southwest.lng) {
+            alert("Inside the square");
+          } else { alert("outside")}
+
       }
 
       function getLocation() {
-        console.log('calling Android.requestLocation()');
+        Android.log('calling Android.requestLocation()');
         Android.requestLocation();
-        console.log('called Android.requestLocation()');
+        Android.log('called Android.requestLocation()');
+        onLocationReady(56.044861, 10.088421);
       }
     </script>
     <style>
