@@ -28,7 +28,7 @@
         };
 
       function onLocationReady(lat, long){
-        console.log('Latitude: ' + lat + 'Longitude: ' + long);
+        Android.log('Latitude: ' + lat + 'Longitude: ' + long);
 
         if(lat < targetSquare.northeast.lat 
           && lat > targetSquare.southwest.lat
@@ -40,10 +40,10 @@
       }
 
       function getLocation() {
-        console.log('calling Android.requestLocation()');
+        Android.log('calling Android.requestLocation()');
         Android.requestLocation();
+        Android.log('called Android.requestLocation()');
         onLocationReady(56.044861, 10.088421);
-        console.log('called Android.requestLocation()');
       }
     </script>
     <style>

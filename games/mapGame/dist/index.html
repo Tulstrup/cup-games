@@ -35,7 +35,7 @@ targetSquare = {
 };
 
 function onLocationReady(lat, long) {
-  console.log('Latitude: ' + lat + 'Longitude: ' + long);
+  Android.log('Latitude: ' + lat + 'Longitude: ' + long);
 
   if (lat < targetSquare.northeast.lat && lat > targetSquare.southwest.lat && long < targetSquare.northeast.lng && long > targetSquare.southwest.lng) {
     alert("Inside the square");
@@ -45,10 +45,10 @@ function onLocationReady(lat, long) {
 }
 
 function getLocation() {
-  console.log('calling Android.requestLocation()');
+  Android.log('calling Android.requestLocation()');
   Android.requestLocation();
+  Android.log('called Android.requestLocation()');
   onLocationReady(56.044861, 10.088421);
-  console.log('called Android.requestLocation()');
 }</script>
     <style>#map {
         height: 80%;
