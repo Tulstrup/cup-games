@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="digitsensitive">
+    <title>Template</title>
+    <link rel="stylesheet" type="text/css" href="50b2ba8f5ffc5ec0833d9afc1c482c6e" media="screen">
+    <script src="5cbb73ad1a37345a45e1261fd1bcd664"></script>
+  </head>
+  <body>
+    <h1>Template</h1>
+    <div id="game"></div>
+  </body>
+</html>
