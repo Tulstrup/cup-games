@@ -9,7 +9,7 @@
   "scripts": {
     "template": "cd games/template && npm i && npm run dev",
     "jonas": "cd games/jonas && npm i && npm run dev",
-    "build-all": "npm run build-jonas && npm run build-template",
+    "build-all": "npm run build-jonas",
     "build-template": "cd games/template && npm i && parcel build ./index.html -d ../../dist/template && cd ../..",
     "build-jonas": "cd games/jonas && npm i && parcel build ./index.html -d ../../dist/jonas && cd ../.."
   },
