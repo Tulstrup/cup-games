@@ -11,6 +11,7 @@
     "phaser": "3.54.0"
   },
   "scripts": {
-    "dev": "parcel ./index.html -p 8080"
+    "dev": "parcel ./index.html -p 8080",
+    "build": "parcel build ./index.html --out-dir mathias/ --public-url '/mathias/'"
   }
 }

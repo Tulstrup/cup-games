@@ -1,15 +1,12 @@
-import { Redhat } from '../objects/redhat';
-
 export class MainScene extends Phaser.Scene {
-  private myRedhat: Redhat;
+  private darts: Dart[];
 
   constructor() {
     super({ key: 'MainScene' });
   }
 
   preload(): void {
-    this.load.image('redhat', 'images/redhat.png');
-    this.load.image('redParticle', 'images/red.png');
+
   }
 
   create(): void {
@@ -21,13 +18,5 @@ export class MainScene extends Phaser.Scene {
       blendMode: 'ADD'
     });
 
-    this.myRedhat = new Redhat({
-      scene: this,
-      x: 400,
-      y: 300,
-      texture: 'redhat'
-    });
-
-    emitter.startFollow(this.myRedhat);
   }
 }
