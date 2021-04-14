@@ -24,6 +24,8 @@ export class MainScene extends Phaser.Scene {
     this.load.image('frame', 'images/frame.png');
     this.load.image('gameImage', 'images/sun.png');
     this.load.spritesheet('puzzleImage', 'images/sun.png', { frameWidth: this.tileSize, frameHeight: this.tileSize});
+    this.load.audio('tile_move', 'audio/tile_move.wav');
+    this.load.audio('win', 'audio/win.wav');
   }
 
   create(): void {
@@ -70,7 +72,12 @@ export class MainScene extends Phaser.Scene {
 
         tile.removeAllListeners();
         tile.on('pointerdown', () => {
-          this.puzzle.interact(row, col);
+          const interacted = this.puzzle.interact(row, col);
+
+          if (!interacted)
+            return;
+
+          this.sound.play('tile_move');
           this.updateTiles();
 
           if(this.puzzle.isPuzzleCompleted())
@@ -81,6 +88,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   private puzzleWasCompleted() {
+    this.sound.play('win');
+
     for(let i = 0; i < this.tiles.length; i++) {
       this.tiles[i].setAlpha(0);
     }
