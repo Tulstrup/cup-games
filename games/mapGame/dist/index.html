@@ -25,20 +25,26 @@ var Square = function Square() {
 ;
 targetSquare = {
   southwest: {
-    lng: 10.088403,
-    lat: 56.044847
+    lat: 56.044847,
+    lng: 10.088403
   },
   northeast: {
-    lng: 10.088451,
-    lat: 56.044874
+    lat: 56.044874,
+    lng: 10.088451
   }
 };
+
+function onDataReady(greeting) {
+  var addressFromGreeting = "///flængen.kodeordet.afgangen";
+  targetSquare = what3words.api.convertToCoordinates(addressFromGreeting);
+}
 
 function onLocationReady(lat, long) {
   Android.log('Latitude: ' + lat + 'Longitude: ' + long);
 
   if (lat < targetSquare.northeast.lat && lat > targetSquare.southwest.lat && long < targetSquare.northeast.lng && long > targetSquare.southwest.lng) {
     alert("Inside the square");
+    Android.onGameCompleted();
   } else {
     alert("outside");
   }
@@ -79,7 +85,17 @@ var map = new google.maps.Map(document.getElementById("map"), {
   zoom: 19,
   mapTypeId: 'satellite'
 });</script>
-    <script>var gridData; // Add the what3words grid to the Google Map data layer once the desired zoom level is meet
+    <script>var gridData;
+var targetSquare = {
+  southwest: {
+    lat: 56.044832,
+    lng: 10.088383
+  },
+  northeast: {
+    lat: 56.044889,
+    lng: 10.088471
+  }
+}; // Add the what3words grid to the Google Map data layer once the desired zoom level is meet
 
 map.addListener('bounds_changed', function () {
   var zoom = map.getZoom();
@@ -90,16 +106,7 @@ map.addListener('bounds_changed', function () {
     var ne = map.getBounds().getNorthEast();
     var sw = map.getBounds().getSouthWest(); // Call the what3words Grid API to obtain the grid squares within the current visble bounding box
 
-    what3words.api.gridSectionGeoJson({
-      southwest: {
-        lat: sw.lat(),
-        lng: sw.lng()
-      },
-      northeast: {
-        lat: ne.lat(),
-        lng: ne.lng()
-      }
-    }).then(function (data) {
+    what3words.api.gridSectionGeoJson(targetSquare).then(function (data) {
       if (gridData !== undefined) {
         for (var i = 0; i < gridData.length; i++) {
           map.data.remove(gridData[i]);
@@ -113,8 +120,9 @@ map.addListener('bounds_changed', function () {
 
   map.data.setStyle({
     visible: loadFeatures,
-    strokeColor: '#000000',
-    strokeWeight: 0.5
+    strokeColor: '#AA0000',
+    fillColor: '#0000DD',
+    strokeWeight: 4
   });
 });</script>
   </body>
