@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/digitsensitive/phaser3-typescript/issues"
   },
-  "homepage": "https://github.com/digitsensitive/phaser3-typescript#readme"
+  "homepage": "https://github.com/digitsensitive/phaser3-typescript#readme",
+  "dependencies": {
+    "parcel": "^2.0.0-beta.2"
+  }
 }
