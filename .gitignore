@@ -2,6 +2,7 @@
 deploy/js/
 .cache/
 .idea/
+.parcel-cache/
 
 ### Node ###
 # Logs
