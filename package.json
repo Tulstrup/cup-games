@@ -10,7 +10,7 @@
     "template": "cd games/template && npm i && npm run dev",
     "jonas": "cd games/jonas && npm i && npm run dev",
     "mapgame": "cd games/mapGame && npm i && npm run dev",
-    "build-all": "npm run build-mapGame && npm run build-balloon && npm run build-imagepuzzle",
+    "build-all": "npm run build-mapgame && npm run build-balloon && npm run build-imagepuzzle",
     "build-mapgame": "cd games/mapGame && npm i && parcel build ./index.html -d ../../dist/mapgame --public-url /mapgame/ && cd ../..",
     "build-balloon": "cd games/balloon && npm i && parcel build ./index.html -d ../../dist/balloon --public-url /balloon/ && cd ../..",
     "build-imagepuzzle": "cd games/ImagePuzzle && npm i && parcel build ./index.html -d ../../dist/imagepuzzle --public-url /imagepuzzle/ && cd ../.."
