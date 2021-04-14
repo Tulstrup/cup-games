@@ -8,7 +8,9 @@ export class MainScene extends Phaser.Scene {
   private puzzle: PuzzleModel;
   private rows: number = 3;
   private cols: number = 3;
-  private tileSize: number = 166;
+  private imageSize = 500;
+  private tileSize: number = this.imageSize / this.rows;
+  private imageScale = 1;
 
   private tiles: Tile[];
 
@@ -21,13 +23,15 @@ export class MainScene extends Phaser.Scene {
     this.load.image('button', 'images/button.png');
     this.load.image('frame', 'images/frame.png');
     this.load.image('gameImage', 'images/sun.png');
-    this.load.spritesheet('diamonds', 'images/sun.png', { frameWidth: 166, frameHeight: 166 });
     this.load.spritesheet('puzzleImage', 'images/sun.png', { frameWidth: this.tileSize, frameHeight: this.tileSize});
   }
 
   create(): void {
-    const background = this.add.image(200, 350, 'background');
-    //background.setScale(0.35);
+    this.imageScale = this.scale.width / this.imageSize * 0.75;
+
+    const background = this.add.image(this.scale.width / 2, this.scale.height / 2, 'background');
+    background.width = this.scale.width;
+    background.height = this.scale.height;
 
     this.puzzle = new PuzzleModel(this.rows, this.cols);
 
@@ -39,7 +43,8 @@ export class MainScene extends Phaser.Scene {
         y: 0,
         texture: 'puzzleImage',
         frame: i
-      });
+      },
+      this.imageScale);
 
       this.tiles.push(tile);
       tile.setInteractive();
@@ -60,8 +65,8 @@ export class MainScene extends Phaser.Scene {
 
         const tile = this.tiles[tileIndex];
 
-        tile.setX(50 + col * this.tileSize);
-        tile.setY(50 + row * this.tileSize);
+        tile.setX(this.scale.width / 2 - (this.imageSize * this.imageScale) / 2 + (col+0.5) * this.tileSize * this.imageScale);
+        tile.setY(this.scale.height / 2 - (this.imageSize * this.imageScale) / 2 + (row+0.5) * this.tileSize * this.imageScale);
 
         tile.removeAllListeners();
         tile.on('pointerdown', () => {
@@ -80,26 +85,26 @@ export class MainScene extends Phaser.Scene {
       this.tiles[i].setAlpha(0);
     }
 
-    const gameImage = this.add.image(220, 300, 'gameImage');
-    gameImage.setScale(0.80)
+    const gameImage = this.add.image(this.scale.width / 2, this.scale.height / 2, 'gameImage');
+    gameImage.setScale(this.imageScale)
     gameImage.rotation = -0.05;
 
-    const frame = this.add.image(220, 300, 'frame');
-    frame.setScale(0.80)
+    const frame = this.add.image(this.scale.width / 2, this.scale.height / 2, 'frame');
+    frame.setScale(this.imageScale)
     frame.rotation = -0.05
 
-    const congratulations = this.add.text(20, 60, 'Hooooray! Well done!', { font: '40px PayType', color: '#504678' });
+    const congratulations = this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.1, 'Hooooray! Well done!', { font: '40px PayType', color: '#504678' });
     congratulations.rotation = -0.10;
 
     this.createButton("Done", this.onCompleteClick);
   }
 
   private createButton(label: string, action: Function): void {
-    const button = this.add.image(220, 600, 'button');
+    const button = this.add.image(this.scale.width / 2, this.scale.height / 2 * 0.9, 'button');
     button.setInteractive();
     button.on('pointerdown', this.onCompleteClick);
     button.setScale(0.40)
-    this.add.text(160, 570, label, { font: '40px PayType', color: '#504678' });
+    this.add.text(this.scale.width / 2, this.scale.height / 2 * 0.9, label, { font: '40px PayType', color: '#504678' });
   }
 
   private onCompleteClick(): void {

@@ -16,7 +16,7 @@ export class PuzzleModel {
   }
 
   shuffleTiles(): void {
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < 5; i++) {
       const emptyTilePoint = this.indexToPoint(this.tiles.findIndex(x => x === -1));
       const direction = this.random(4);
 
