@@ -11,9 +11,9 @@
     "jonas": "cd games/jonas && npm i && npm run dev",
     "mapgame": "cd games/mapGame && npm i && npm run dev",
     "build-all": "npm run build-jonas && npm run build-template && npm run build-mapgame",
-    "build-template": "cd games/template && npm i && parcel build ./index.html -d ../../dist/template --public-url ./template/ && cd ../..",
-    "build-jonas": "cd games/jonas && npm i && parcel build ./index.html -d ../../dist/jonas --public-url ./jonas/ && cd ../..",
-    "build-mapgame": "cd games/mapGame && npm i && parcel build ./index.html -d ../../dist/mapgame --public-url ./mapgame/ && cd ../.."
+    "build-template": "cd games/template && npm i && parcel build ./index.html -d ../../dist --public-url ./template/ && cd ../..",
+    "build-jonas": "cd games/jonas && npm i && parcel build ./index.html -d ../../dist --public-url ./jonas/ && cd ../..",
+    "build-mapgame": "cd games/mapGame && npm i && parcel build ./index.html -d ../../dist --public-url ./mapgame/ && cd ../.."
   },
   "repository": {
     "type": "git",
