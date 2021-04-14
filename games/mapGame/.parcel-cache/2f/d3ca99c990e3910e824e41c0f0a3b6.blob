@@ -1,0 +1,24 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "GameConfig", function () {
+  return GameConfig;
+});
+var _scenesMainScene = require('./scenes/main-scene');
+const GameConfig = {
+  title: 'Template',
+  version: '1.0',
+  width: 800,
+  height: 600,
+  backgroundColor: 0x3a404d,
+  type: Phaser.AUTO,
+  parent: 'game',
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: {
+        y: 200
+      }
+    }
+  },
+  scene: [_scenesMainScene.MainScene]
+};
