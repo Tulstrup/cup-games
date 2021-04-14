@@ -15,13 +15,26 @@
         Android.onLog("hello world");
       }      
     </script>
-    <script src="./src/game.ts"></script>
+    <script src="./src/game.ts"></script> 
+    <style media='screen' type='text/css'>
+      @font-face {
+        font-family: 'Paytype-Rg';
+        src: url('./static/fonts/Paytype-Rg.eot');
+        src: url('./static/fonts/Paytype-Rg.eot?#iefix') format('embedded-opentype'), url('./static/fonts/Paytype-Rg.woff') format('woff'), url('./static/fonts/Paytype-Rg.ttf') format('truetype'), url('./static/fonts/Paytype-Rg.svg#Paytype-Rg') format('svg');
+      }
+  
+      @font-face {
+        font-family: 'Paytype-Bd';
+        src: url('./static/fonts/Paytype-Bd.eot');
+        src: url('./static/fonts/Paytype-Bd.eot?#iefix') format('embedded-opentype'), url('./static/fonts/Paytype-Bd.woff') format('woff'), url('./static/fonts/Paytype-Bd.ttf') format('truetype'), url('./static/fonts/Paytype-Bd.svg#Paytype-Rg') format('svg');
+      }
+    </style>
   </head>
   <body>
-    <h1>Image puzzler</h1>
+    <div style="font-family:Paytype-Rg,serif; position:absolute; left:-1000px; visibility:hidden;">.</div>
+    <div style="font-family:Paytype-Bd,serif; position:absolute; left:-1000px; visibility:hidden;">.</div>  
+    <div id="game"></div>
     <button onclick="Android.onGameCompleted()">onGameCompleted</button>
     <button onclick="Android.onLocationRequested()">onLocationRequested</button>
-    
-    <div id="game"></div>
   </body>
 </html>
