@@ -32,7 +32,14 @@ export class Slingshot extends Phaser.GameObjects.Image {
 	}
 
 	drag(pointer: PointerEvent, dragX: number, dragY: number) {
-		this.setPosition(dragX, dragY);
+		let clampedX = Phaser.Math.Clamp(dragX, 0, this.scene.scale.width);
+		let clampedY = Phaser.Math.Clamp(
+			dragY,
+			this._spawnPoint.y - 100,
+			this.scene.scale.height
+		);
+
+		this.setPosition(clampedX, clampedY);
 
 		const endPosition = new Phaser.Math.Vector2(dragX, dragY);
 		let dir = this._spawnPoint.clone().subtract(endPosition).normalize();
@@ -42,6 +49,9 @@ export class Slingshot extends Phaser.GameObjects.Image {
 	dragEnd(pointer: PointerEvent, dragX: number, dragY: number) {
 		const endPosition = new Phaser.Math.Vector2(this.x, this.y);
 		this.setPosition(this._spawnPoint.x, this._spawnPoint.y);
+
+		let distance = this._spawnPoint.distance(endPosition);
+		if (distance < 2) return;
 
 		this._gameworld.spawnDart(
 			endPosition,
