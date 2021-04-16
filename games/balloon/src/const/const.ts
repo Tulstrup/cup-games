@@ -7,7 +7,7 @@ export let CONST = {
 		MIN_X_POSITION: 30,
 		MIN_Y_POSITION: 60,
 		MAX_Y_POSITION: 350,
-		TOTAL: 50,
+		TOTAL: 100,
 		SCALE: 0.2
 	},
 

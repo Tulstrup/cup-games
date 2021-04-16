@@ -38,6 +38,7 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 		this.background.setOrigin(0, 0);
 		this.add.existing(this.background);
 
+		// this.setupWinningScreen();
 		this.setupBalloonCounter();
 
 		this.slingshot = new Slingshot({
@@ -148,6 +149,14 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 			continueButtonHeight,
 			50
 		);
+		continueButton.strokeRoundedRect(
+			this.scale.width / 2 - continueButtonWidth / 2,
+			continueButtonY,
+			continueButtonWidth,
+			continueButtonHeight,
+			50
+		);
+
 		continueButton.setInteractive(
 			new Phaser.Geom.Rectangle(
 				continueButton.x,

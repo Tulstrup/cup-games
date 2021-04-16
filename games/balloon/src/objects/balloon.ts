@@ -34,8 +34,8 @@ export class Balloon extends Phaser.GameObjects.Sprite {
 		this.scene.add.existing(this);
 	}
 
-	update(): void {
-		this.applyVelocity();
+	update(elapsed: number, deltaTime: number) {
+		this.applyVelocity(elapsed);
 		this.checkIfOffScreen();
 	}
 
@@ -53,19 +53,21 @@ export class Balloon extends Phaser.GameObjects.Sprite {
 	private applyPhysics(): void {
 		this.scene.physics.world.enable(this);
 		this.body.allowGravity = false;
-		this.body.setCircle(this.radius);
-		this.body.setOffset(-this.radius, -this.radius);
+		this.body.setSize(300, 300, true);
+		this.body.setOffset(150, 20);
 
-		this.velocity = new Phaser.Math.Vector2(
-			Phaser.Math.RND.between(
-				CONST.BALLOON.MIN_SPEED,
-				CONST.BALLOON.MAX_SPEED
-			),
-			0
-		);
+		let num =
+			Math.floor(Math.random() * CONST.BALLOON.MAX_SPEED) +
+			CONST.BALLOON.MIN_SPEED;
+
+		num += (Math.floor(Math.random() * 10000) + 0) * 0.00005;
+
+		console.log(num);
+
+		this.velocity = new Phaser.Math.Vector2(num, 0);
 	}
 
-	private applyVelocity(): void {
+	private applyVelocity(elapsed: number): void {
 		this.x += this.direction.x * this.velocity.x;
 	}
 
