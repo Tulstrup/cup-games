@@ -89,7 +89,7 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 		this.setupWinningScreen();
 
 		setTimeout(() => {
-			Android.onGameComplete();
+			Android.onGameCompleted();
 		}, 1000);
 	}
 

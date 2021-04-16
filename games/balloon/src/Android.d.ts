@@ -1,3 +1,3 @@
 declare module Android {
-	function onGameComplete(): void;
+	function onGameCompleted(): void;
 }
