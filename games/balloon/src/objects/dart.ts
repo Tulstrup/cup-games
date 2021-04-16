@@ -52,8 +52,8 @@ export class Dart extends Phaser.Physics.Arcade.Sprite {
 		const direction = this.parameters.direction;
 
 		this.setVelocity(
-			direction.x * this._currentSpeed * deltaTime,
-			direction.y * this._currentSpeed * deltaTime
+			direction.x * this._currentSpeed,
+			direction.y * this._currentSpeed
 		);
 	}
 }

@@ -87,6 +87,10 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 		this.isGameover = true;
 
 		this.setupWinningScreen();
+
+		setTimeout(() => {
+			Android.onGameComplete();
+		}, 1000);
 	}
 
 	spawnDart(position: Phaser.Math.Vector2, direction: Phaser.Math.Vector2) {
@@ -165,7 +169,7 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 				continueButtonWidth,
 				continueButtonHeight
 			),
-			() => {}
+			(a, b, c, d) => {}
 		);
 
 		const continueText = this.add.text(

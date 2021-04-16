@@ -22,7 +22,7 @@ export let CONST = {
 };
 
 export let DART_SETTINGS: DartSettings = {
-	minSpeed: 125,
-	maxSpeed: 150,
+	minSpeed: 800,
+	maxSpeed: 900,
 	deAccleration: 0.95
 };
