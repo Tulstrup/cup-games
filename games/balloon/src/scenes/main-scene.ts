@@ -35,6 +35,7 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 			'background'
 		);
 		this.background.height = this.scale.height;
+		this.background.displayHeight = this.scale.height;
 		this.background.setOrigin(0, 0);
 		this.add.existing(this.background);
 
@@ -104,7 +105,7 @@ export class MainScene extends Phaser.Scene implements Gameworld {
 		for (let i = 0; i < CONST.BALLOON.TOTAL; i++) {
 			const balloon = new Balloon({
 				scene: this,
-				x: createInLeftSide ? 0 : this.scale.width,
+				x: createInLeftSide ? -125 : this.scale.width + 125,
 				y: this.getRandomSpawnPostion(
 					CONST.BALLOON.MIN_Y_POSITION,
 					CONST.BALLOON.MAX_Y_POSITION

@@ -31,6 +31,11 @@ export class Balloon extends Phaser.GameObjects.Sprite {
 
 		this.applyPhysics();
 
+		const color = new Phaser.Display.Color();
+		color.random(125, 255);
+		color.saturate(110);
+		this.tint = color.color;
+		this.tintFill = true;
 		this.scene.add.existing(this);
 	}
 
@@ -62,8 +67,6 @@ export class Balloon extends Phaser.GameObjects.Sprite {
 
 		num += (Math.floor(Math.random() * 10000) + 0) * 0.00005;
 
-		console.log(num);
-
 		this.velocity = new Phaser.Math.Vector2(num, 0);
 	}
 
@@ -78,9 +81,9 @@ export class Balloon extends Phaser.GameObjects.Sprite {
 		const maxY = this.scene.sys.canvas.height / 2;
 
 		// horizontal check
-		if (this.x < 0) {
+		if (this.x < width / 4) {
 			this.direction = Phaser.Math.Vector2.RIGHT;
-		} else if (this.x > this.scene.scale.width) {
+		} else if (this.x > this.scene.scale.width - width / 4) {
 			this.direction = Phaser.Math.Vector2.LEFT;
 		}
 	}
